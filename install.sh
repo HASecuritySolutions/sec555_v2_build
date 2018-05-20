@@ -26,3 +26,13 @@ sudo sh -c 'echo "deb [arch=amd64] https://packages.microsoft.com/repos/vscode s
 sudo apt update
 sudo apt install -y code
 curl -L https://github.com/HASecuritySolutions/sec555_v2_build/raw/master/settings.json -o $HOME/.config/Code/User/settings.json
+
+# Set up desktop environment
+
+mkdir $HOME/555_files
+curl -L https://github.com/HASecuritySolutions/sec555_v2_build/raw/master/sec555_coin.png -o $HOME/555_files/sec555_coin.png
+curl -L https://github.com/HASecuritySolutions/sec555_v2_build/raw/master/purple_terminal.bmp -o $HOME/555_files/purple_terminal.bmp
+
+xfconf-query --channel xfce4-desktop --property /backdrop/screen0/monitor0/image-path --set $HOME/555_files/sec555_coin.png
+xfconf-query --channel xfce4-desktop --property /backdrop/screen0/monitor0/workspace0/image-path --set $HOME/555_files/sec555_coin.png
+xfconf-query --channel xfce4-desktop --property /backdrop/screen0/monitor0/workspace0/image-style --set 1
