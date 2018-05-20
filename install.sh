@@ -43,3 +43,8 @@ curl -L https://github.com/HASecuritySolutions/sec555_v2_build/raw/master/purple
 xfconf-query --channel xfce4-desktop --property /backdrop/screen0/monitor0/image-path --set $HOME/555_files/sec555_coin.png
 xfconf-query --channel xfce4-desktop --property /backdrop/screen0/monitor0/workspace0/image-path --set $HOME/555_files/sec555_coin.png
 xfconf-query --channel xfce4-desktop --property /backdrop/screen0/monitor0/workspace0/image-style --set 1
+
+# Pull docker images
+sudo docker pull hasecuritysolutions/wikiup
+sudo docker pull httpd
+sudo docker run -d --name wiki --restart always --net=bridge -p 80:80 -v /var/www/sec555-wiki:/usr/local/apache2/htdocs/ httpd
