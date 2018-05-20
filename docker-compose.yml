@@ -34,25 +34,21 @@ services:
       - ELASTICSEARCH_URL=http://elasticsearch:9200
     ports:
       - 5601:5601
-  logstash:
-    image: hasecuritysolutions/logstashoss
-    container_name: logstash
+  rabbitmq:
+    image: rabbitmq:3-management
+    container_name: rabbitmq
+    hostname: rabbitmq
     network_mode: bridge
     environment:
-      - ELASTICSEARCH_HOST=elasticsearch
-      - LOG_LEVEL=info
-      - pipeline.batch.size=125
-      - "LS_JAVA_OPTS:-Xmx1g -Xms256m"
-    mem_limit: 2g
+      - RABBITMQ_VM_MEMORY_HIGH_WATERMARK=0.25
+      - RABBITMQ_DEFAULT_USER=student
+      - RABBITMQ_DEFAULT_PASS=sec555
+    mem_limit: 1g
     ports:
-      - 5044:5044
-      - 5045:5045
-      - 6050:6050
+      - 8080:8080
+      - 15672:15672
     volumes:
-      - /labs/logstash/pipelines.yml:/usr/share/logstash/config/pipelines.yml:ro
-      - /labs/logstash/logstash_configs:/opt/logstash_configs:ro
-      - /labs/logstash/rules:/etc/nsm/rules:ro
-      - /labs/logstash/persistent_data:/usr/share/logstash/data
+      - /labs/rabbitmq/mnesia:/var/lib/rabbitmq/mnesia
   freq_server:
     image: hasecuritysolutions/freq_server
     container_name: freq_server
