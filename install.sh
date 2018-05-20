@@ -57,4 +57,4 @@ alias filebeat="docker run -it --rm --net=bridge -v /labs:/labs:ro -v /var/log:/
 alias logstash="docker run -it --rm --net=bridge --name logstash -v /labs:/labs --link elasticsearch -e ELASTICSEARCH_HOST=elasticsearch -p 5044:5044 -p 5045:5045 -p 6000:6000 -p 6050:6050 hasecuritysolutions/logstashoss /usr/share/logstash/bin/logstash"
 alias pwsh="docker run -it -v /labs:/labs -v /scripts:/scripts -v /var/www:/var/www -v /home/student:/home/student -v /var/run/docker.sock:/var/run/docker.sock --rm --link elasticsearch hasecuritysolutions/wikiup /usr/bin/pwsh"
 alias curator="docker run -it -v /etc/localtime:/etc/localtime:ro -v /labs/curator:/labs/curator:ro -e TZ=America/Chicago -e ELASTICSEARCH_HOST=elasticsearch --net=bridge --rm --link elasticsearch hasecuritysolutions/elastic_cron /usr/local/bin/curator"
-alias elastalert="docker run -it --rm --net=bridge -v /labs/elastalert:/labs/elastalert --link elasticsearch hasecuritysolutions/elastalert /usr/local/bin/elastalert
+alias elastalert="docker run -it --rm --net=bridge -v /labs/elastalert:/labs/elastalert --link elasticsearch hasecuritysolutions/elastalert /usr/local/bin/elastalert"
