@@ -48,3 +48,4 @@ xfconf-query --channel xfce4-desktop --property /backdrop/screen0/monitor0/works
 sudo docker pull hasecuritysolutions/wikiup
 sudo docker pull httpd
 sudo docker run -d --name wiki --restart always --net=bridge -p 80:80 -v /var/www/sec555-wiki:/usr/local/apache2/htdocs/ httpd
+sudo docker pull mcr.microsoft.com/powershell
