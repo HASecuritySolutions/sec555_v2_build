@@ -1,0 +1,111 @@
+version: '2.2'
+services:
+  elasticsearch:
+    image: docker.elastic.co/elasticsearch/elasticsearch-oss:6.2.4
+    container_name: elasticsearch
+    restart: always
+    network_mode: bridge
+    environment:
+      - cluster.name=sec555
+      - node.name=elasticsearch
+      - discovery.type=single-node
+      - "ES_JAVA_OPTS=-Xms1g -Xmx1g"
+      - path.repo=/snapshots
+    ulimits:
+      memlock:
+        soft: -1
+        hard: -1
+    mem_limit: 4g
+    volumes:
+      - /labs/elasticsearch/es_data:/usr/share/elasticsearch/data
+      - /labs/elasticsearch/snapshots:/snapshots
+    ports:
+      - 9200:9200
+      - 9300:9300
+  kibana:
+    image: hasecuritysolutions/kibanaoss
+    container_name: kibana
+    restart: always
+    network_mode: bridge
+    depends_on:
+      - elasticsearch
+    environment:
+      - SERVER_NAME=kibana
+      - ELASTICSEARCH_URL=http://elasticsearch:9200
+    ports:
+      - 5601:5601
+  logstash:
+    image: hasecuritysolutions/logstashoss
+    container_name: logstash
+    network_mode: bridge
+    environment:
+      - ELASTICSEARCH_HOST=elasticsearch
+      - LOG_LEVEL=info
+      - pipeline.batch.size=125
+      - "LS_JAVA_OPTS:-Xmx1g -Xms256m"
+    mem_limit: 2g
+    ports:
+      - 5044:5044
+      - 5045:5045
+      - 6050:6050
+    volumes:
+      - /labs/logstash/pipelines.yml:/usr/share/logstash/config/pipelines.yml:ro
+      - /labs/logstash/logstash_configs:/opt/logstash_configs:ro
+      - /labs/logstash/rules:/etc/nsm/rules:ro
+      - /labs/logstash/persistent_data:/usr/share/logstash/data
+  freq_server:
+    image: hasecuritysolutions/freq_server
+    container_name: freq_server
+    network_mode: bridge
+    restart: always
+    ports:
+      - 10004:10004
+  domain_stats:
+    image: hasecuritysolutions/domain_stats
+    container_name: domain_stats
+    network_mode: bridge
+    restart: always
+    ports:
+      - 20000:20000
+  wikiup:
+    image: hasecuritysolutions/wikiup
+    container_name: wikiup
+    network_mode: bridge
+    volumes:
+      - /labs:/labs
+      - /var/www/sec555-wiki:/var/www/sec555-wiki
+      - /scripts:/scripts
+      - /var/run/docker.sock:/var/run/docker.sock
+  cerebro:
+    image: dylanmei/cerebro
+    container_name: cerebro
+    restart: always
+    network_mode: bridge
+    depends_on:
+      - elasticsearch
+    ports:
+      - 9000:9000
+  elastic_cron:
+    image: hasecuritysolutions/elastic_cron
+    container_name: elastic_cron
+    network_mode: bridge
+    depends_on:
+      - elasticsearch
+    environment:
+      - ELASTICSEARCH_HOST=elasticsearch
+      - TZ=America/Chicago
+    volumes:
+      - /etc/localtime:/etc/localtime:ro
+      - /labs/curator:/etc/curator:ro
+  elastalert:
+    image: hasecuritysolutions/elastalert
+    container_name: elastalert
+    network_mode: bridge
+    depends_on:
+      - elasticsearch
+    volumes:
+      - /labs/elastalert:/etc/elastalert:ro
+
+networks:
+  default:
+    driver: bridge
