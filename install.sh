@@ -48,7 +48,7 @@ xfconf-query --channel xfce4-desktop --property /backdrop/screen0/monitor0/works
 sudo docker pull httpd
 sudo docker run -d --name wiki --restart always --net=bridge -p 80:80 -v /var/www/sec555-wiki:/usr/local/apache2/htdocs/ httpd
 sudo docker pull rabbitmq
-sudo docker run -d --name rabbitmq --hostname rabbitmq --net=bridge -p 8080:8080 -p 15672:15672 -e RABBITMQ_VM_MEMORY_HIGH_WATERMARK=0.25 -e RABBITMQ_DEFAULT_USER=student -e RABBITMQ_DEFAULT_PASS=sec555 -v /labs/rabbitmq/mnesia:/var/lib/rabbitmq/mnesia rabbitmq:3-management
+sudo docker run -d --name rabbitmq --hostname rabbitmq --net=bridge -p 5672:5672 -p 8080:8080 -p 15672:15672 -e RABBITMQ_VM_MEMORY_HIGH_WATERMARK=0.25 -e RABBITMQ_DEFAULT_USER=student -e RABBITMQ_DEFAULT_PASS=sec555 -v /labs/rabbitmq/mnesia:/var/lib/rabbitmq/mnesia rabbitmq:3-management
 sudo docker pull hasecuritysolutions/wikiup:v1.0
 sudo docker pull hasecuritysolutions/elastic_cron:v1.0
 sudo docker pull hasecuritysolutions/elastalert:v0.1.31
