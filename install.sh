@@ -5,7 +5,14 @@
 sudo apt update
 sudo apt install -y apt-transport-https ca-certificates curl software-properties-common gnome-terminal vim
 sudo apt dist-upgrade -y
-
+sudo mkdir /scripts
+sudo mkdir /var/www/
+sudo mkdir /var/www/sec555-wiki
+cd /var/www/sec555-wiki
+sudo mkdir /var/www/sec555-wiki/sec555-labs
+sudo git clone https://github.com/sans-blue-team/sec555-wiki.git .
+sudo mkdir /labs
+sudo chown student: /labs
 
 # Install Docker
 
