@@ -1,0 +1,11 @@
+// Place your settings in this file to overwrite the default settings
+{
+    "files.defaultLanguage": "logstash",
+    "files.associations": {
+        "*.conf": "logstash"
+    },
+    "workbench.colorTheme": "Default Light+",
+    "update.channel": "none",
+    "window.zoomLevel": 3,
+    "editor.tabSize": 2
+}
