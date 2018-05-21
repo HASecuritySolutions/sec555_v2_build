@@ -57,16 +57,10 @@ sudo docker pull hasecuritysolutions/logstashoss:v6.2.2
 
 sudo chmod 755 /labs/1.1/filebeat.yml
 
-sudo ln -s /labs/bashrc /etc/bashrc
-echo "" | sudo tee -a /etc/profile
-echo "if [ -f /etc/bashrc ]; then"  | sudo tee -a /etc/profile
-echo "    . /etc/bashrc"  | sudo tee -a /etc/profile
-echo "fi"  | sudo tee -a /etc/profile
-
 alias filebeat="docker run -it --rm --net=bridge --network=labs_esnet --name filebeat --hostname filebeat -v /labs:/labs:ro -v /var/log:/var/log:ro --link logstash docker.elastic.co/beats/filebeat:6.2.4 /usr/share/filebeat/filebeat"
 alias logstash="docker run -it --rm --net=bridge --network=labs_esnet --name logstash --hostname logstash -v /labs:/labs --link rabbitmq --link elasticsearch --link freq_server --link domain_stats -e ELASTICSEARCH_HOST=elasticsearch -p 5044:5044 -p 5045:5045 -p 6000:6000 -p 6050:6050 hasecuritysolutions/logstashoss:v6.2.2 /usr/share/logstash/bin/logstash"
 alias pwsh="docker run -it --rm --net=bridge --network=labs_esnet -v /labs:/labs -v /scripts:/scripts -v /var/www:/var/www -v /home/student:/home/student -v /var/run/docker.sock:/var/run/docker.sock --link elasticsearch hasecuritysolutions/wikiup:v1.0 /usr/bin/pwsh"
 alias curator="docker run -it --rm --net=bridge --network=labs_esnet -v /etc/localtime:/etc/localtime:ro --name curator --hostname curator -v /labs/curator:/labs/curator:ro -e TZ=America/Chicago -e ELASTICSEARCH_HOST=elasticsearch --net=bridge --link elasticsearch hasecuritysolutions/elastic_cron:v1.0 /usr/local/bin/curator"
 alias elastalert="docker run -it --rm --net=bridge --network=labs_esnet --name elastalert --hostname elastalert -v /labs/elastalert:/labs/elastalert --link elasticsearch hasecuritysolutions/elastalert:v0.1.31 /usr/local/bin/elastalert"
-alias wikiup="docker run -it --rm --net=bridge --network=labs_esnet -v /root/.ssh:/root/.ssh -v /home/student/.ssh:/home/student/.ssh -v /labs:/labs -v /var/www/sec555-wiki:/var/www/sec555-wiki -v /scripts:/scripts -v /var/run/docker.sock:/var/run/docker.sock hasecuritysolutions/wikiup:v1.0"
+alias wikiup="docker run -it --rm --net=bridge --network=labs_esnet -v /root/.ssh:/root/.ssh -v /home/student/.ssh:/home/student/.ssh -v /labs:/labs -v /var/www/sec555-wiki:/var/www/sec555-wiki -v /scripts:/scripts -v /var/run/docker.sock:/var/run/docker.sock -v /root:/root -v /home/student:/home/student hasecuritysolutions/wikiup:v1.0"
 alias elastalert-test-rule="docker run -it --rm --net=bridge --network=labs_esnet --name elastalert --hostname elastalert -v /labs/elastalert:/labs/elastalert --link elasticsearch hasecuritysolutions/elastalert:v0.1.31 /usr/local/bin/elastalert-test-rule"
