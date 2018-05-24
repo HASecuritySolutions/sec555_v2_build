@@ -3,7 +3,7 @@
 # Install Prerequisites
 
 sudo apt update
-sudo apt install -y apt-transport-https ca-certificates curl software-properties-common gnome-terminal vim auditd
+sudo apt install -y apt-transport-https ca-certificates curl software-properties-common gnome-terminal vim auditd nmap
 sudo apt dist-upgrade -y
 sudo mkdir /scripts
 sudo mkdir /var/www/
